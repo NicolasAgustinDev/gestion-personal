@@ -1,0 +1,163 @@
+.categorias-container {
+    padding: 20px;
+}
+
+.titulo-seccion {
+    margin-bottom: 25px;
+}
+
+.titulo-seccion h4 {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+/* CARD */
+.card-categoria {
+    background: #111c44;
+    border-radius: 22px;
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-categoria:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 15px 35px rgba(0,0,0,0.35);
+}
+
+/* Header */
+
+.header-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.icono {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+
+    background: linear-gradient(
+        135deg,
+        #4F46E5,
+        #2563EB
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+    color: white;
+
+    flex-shrink: 0;
+}
+
+/* Texto */
+
+.info h5 {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.info p {
+    color: #A0AEC0;
+    margin: 4px 0 0;
+    font-size: 14px;
+}
+
+/* Estado */
+
+.estado {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 14px;
+    border-radius: 999px;
+
+    background: rgba(34,197,94,.15);
+    color: #22C55E;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    margin-bottom: 25px;
+}
+
+/* Datos */
+
+.datos-categoria {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.datos-categoria div {
+    flex: 1;
+    background: rgba(255,255,255,.03);
+    border-radius: 14px;
+    padding: 14px;
+}
+
+.datos-categoria small {
+    color: #94A3B8;
+    font-size: 13px;
+}
+
+.datos-categoria h6 {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+/* Botones */
+
+.acciones {
+    display: flex;
+    gap: 12px;
+}
+
+.acciones button {
+    flex: 1;
+    border: none;
+    border-radius: 14px;
+    padding: 12px;
+
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+/* editar */
+
+.acciones button:first-child {
+    background: #2563EB;
+    color: white;
+}
+
+.acciones button:first-child:hover {
+    transform: scale(1.02);
+}
+
+/* eliminar */
+
+.acciones button:last-child {
+    background: rgba(239,68,68,.15);
+    color: #EF4444;
+}
+
+.acciones button:last-child:hover {
+    background: rgba(239,68,68,.25);
+}

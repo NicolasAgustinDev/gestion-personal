@@ -1,0 +1,19 @@
+#Intellij IDEA
+.idea/
+*.iml
+
+#Maven 
+target/
+
+# Compilados de Java
+*.class
+
+# Logs
+*.log
+
+# Archivos de configuración locales
+.env
+
+# Configuración sensible
+application-local.properties
+application-local.yml
