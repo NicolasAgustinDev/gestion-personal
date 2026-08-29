@@ -43,8 +43,6 @@ public class UsuarioMapper {
         usuario.setApellido(updateDTO.getApellido());
         usuario.setUsername(updateDTO.getUsername());
         usuario.setEmail(updateDTO.getEmail());
-        usuario.setRol(updateDTO.getRol());
-        usuario.setEstado(updateDTO.getEstado());
         return usuario;
     }
 }

@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     formulario.addEventListener("submit", async (e) => {
         e.preventDefault();
         await modificarEmpleado(formulario);
-
     });
 });
 

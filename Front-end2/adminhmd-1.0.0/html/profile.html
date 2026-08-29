@@ -162,7 +162,7 @@
               </div>
             </div>
             <div class="col-12 col-xl-8">
-              <form class="panel needs-validation" novalidate>
+              <form class="panel needs-validation" id="formEditarUsuario" novalidate>
                 <div class="panel-header">
                   <div>
                     <h2 class="h5 mb-1 section-title">
@@ -203,17 +203,23 @@
                       Enter a valid email.
                     </div>
                   </div>
-                  <div class="form-check">
-                    <input class="form-check-input" id="profileEstado" type="checkbox">
-                    <label class="form-check-label" for="profileEstado">
-                      Usuario Activo
+                  <div class="col-md-6">
+                    <label class="form-label" for="profileApellido">
+                      Apellido
                     </label>
+                    <input class="form-control" id="profileApellido" type="text" required>
                     <div class="invalid-feedback">
-                      Enter a valid Estado.
+                      Enter a valid Apellido.
                     </div>
                   </div>
                 </div>
-                <div class="d-flex justify-content-end mt-4"><button class="btn btn-primary" type="submit"><i class="bi bi-check2-circle" aria-hidden="true"></i> Save Profile</button></div>
+                <div class="d-flex justify-content-end mt-4">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-check2-circle" aria-hidden="true">
+                    </i>
+                     Save Profile
+                  </button>
+                  </div>
               </form>
             </div>
           </section>

@@ -61,6 +61,7 @@ public class UsuarioController {
     @PutMapping("/me")
     public ResponseEntity<UsuarioResponseDTO> updateMe(Authentication authentication,
                                                        @RequestBody UsuarioUpdateDTO dto){
-
+        UsuarioResponseDTO usuario = usuarioService.acctualizarUsuarioActual(authentication,dto);
+        return ResponseEntity.ok(usuario);
     }
  }

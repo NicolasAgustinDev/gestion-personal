@@ -14,4 +14,5 @@ public interface UsuarioService {
     UsuarioResponseDTO update(Long id, UsuarioUpdateDTO updateDTO);
     void delete(Long id);
     UsuarioResponseDTO obtenerUsuarioActual(Authentication authentication);
+    UsuarioResponseDTO acctualizarUsuarioActual(Authentication authentication,UsuarioUpdateDTO dto);
 }

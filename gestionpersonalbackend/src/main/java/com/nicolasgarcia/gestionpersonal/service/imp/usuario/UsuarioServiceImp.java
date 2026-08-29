@@ -57,6 +57,19 @@ public class UsuarioServiceImp implements UsuarioService {
     }
 
     // ============================
+    // UPDATE EMPLOYEES ME
+    // ============================
+    @Override
+    public UsuarioResponseDTO acctualizarUsuarioActual(Authentication authentication,
+                                                       UsuarioUpdateDTO dto){
+        CustomUserDetails customUserDetails =(CustomUserDetails)authentication.getPrincipal();
+        Usuario usuario = customUserDetails.getUsuario();
+        usuarioMapper.updateEntity(dto,usuario);
+        Usuario saved = usuarioRepository.save(usuario);
+        return usuarioMapper.toDTO(saved);
+    }
+
+    // ============================
     // CREATE USUARIO
     // ============================
     @Override
@@ -78,14 +91,7 @@ public class UsuarioServiceImp implements UsuarioService {
         return usuarioMapper.toDTO(update);
     }
 
-    // ============================
-    // UPDATE EMPLOYEES ME
-    // ============================
-    @Override
-    public UsuarioResponseDTO acctualizarUsuarioActual(){
 
-
-    }
 
     // ============================
     // DELETE USUARIO

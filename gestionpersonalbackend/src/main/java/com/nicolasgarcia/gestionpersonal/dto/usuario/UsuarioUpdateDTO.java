@@ -20,9 +20,5 @@ public class UsuarioUpdateDTO {
     private String username;
     @NotBlank
     private String email;
-    @NotNull
-    private Rol rol;
-    @NotNull
-    private Boolean estado;
 }
 
