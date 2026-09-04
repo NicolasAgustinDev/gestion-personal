@@ -5,6 +5,7 @@ import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesUpdateDTO;
 import com.nicolasgarcia.gestionpersonal.entity.Categoria;
 import com.nicolasgarcia.gestionpersonal.entity.Employee;
 import com.nicolasgarcia.gestionpersonal.exception.EmployeesNotFoundExeption;
+import com.nicolasgarcia.gestionpersonal.exception.GlobalExceptionHandler;
 import com.nicolasgarcia.gestionpersonal.mapper.employees.EmployeesMapper;
 import com.nicolasgarcia.gestionpersonal.repository.employees.EmployeesRepository;
 import com.nicolasgarcia.gestionpersonal.service.employees.EmployeeService;
@@ -27,7 +28,7 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public EmployeesResponseDTO getById(Long id) {
         Employee emp = employeesRepository.findById(id)
-                .orElseThrow(() -> new EmployeesNotFoundExeption("Empleado no encontrado"));
+                .orElseThrow(() ->  new EmployeesNotFoundExeption("Empleado no encontrado"));
         return employeesMapper.toDTO(emp);
     }
     // ============================
