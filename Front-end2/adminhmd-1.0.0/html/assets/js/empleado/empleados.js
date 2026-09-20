@@ -42,23 +42,6 @@ async function obtenerEmpleados() {
 
         mostrarEmpleados(empleados);
 
-        document.getElementById("totalEmpleados")
-        .innerText = empleados.length;
-
-        const empleadosActivos = empleados.filter(
-            empleado => empleado.estado === true
-        ).length;
-
-        document.getElementById("empleadosActivos")
-        .innerText=empleadosActivos;
-
-        const empleadosInactivos = empleados.filter(
-            empleado => empleado.estado === false
-        ).length;
-        
-        document.getElementById("empleadosInactivos")
-        .innerText=empleadosInactivos;
-
     } catch (error) {
         console.error("Error al obtener empleados:", error);
     }

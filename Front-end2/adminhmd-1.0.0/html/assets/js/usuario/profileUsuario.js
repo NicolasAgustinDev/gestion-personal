@@ -26,5 +26,4 @@ async function profileUsuario() {
     );
     document.getElementById("usuarioNombre").textContent=usuario.nombre;
     document.getElementById("usuarioEmail").textContent=usuario.email;
-    
 }

@@ -140,7 +140,9 @@
                   <span class="metric-label">Total Empleados</span>
                   <span class="metric-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
                 </div>
-                <div class="metric-value" id="totalEmpleados">0</div>
+                <div class="metric-value">
+                  <strong id="empleadosTotal"></strong>
+                </div>
                 <div class="metric-meta">
                 </div>
               </article>
@@ -149,10 +151,12 @@
             <div class="col-12 col-sm-6 col-xl-3">
               <article class="metric-card metric-success">
                 <div class="metric-top">
-                  <span class="metric-label">Activos</span>
+                  <span class="metric-label">Empleados Activos</span>
                   <span class="metric-icon"><i class="bi bi-check2-circle" aria-hidden="true"></i></span>
                 </div>
-                <div class="metric-value" id="empleadosActivos">0</div>
+                <div class="metric-value">
+                  <strong id="empleadosActivos"></strong>
+                </div>
                 <div class="metric-meta">
                 </div>
               </article>
@@ -161,10 +165,12 @@
             <div class="col-12 col-sm-6 col-xl-3">
               <article class="metric-card metric-warning">
                 <div class="metric-top">
-                  <span class="metric-label">Inactivos</span>
+                  <span class="metric-label">Empleados Inactivos</span>
                   <span class="metric-icon"><i class="bi bi-hourglass-split" aria-hidden="true"></i></span>
                 </div>
-                <div class="metric-value" id="empleadosInactivos"></div>
+                <div class="metric-value">
+                  <strong id="empleadosInactivos"></strong>
+                </div>
                 <div class="metric-meta">
                 </div>
               </article>
@@ -431,5 +437,6 @@
   <script src="assets/js/usuario/usuario.js"></script>
   <script src="assets/js/categoria/obtenerCategoria.js"></script>
   <script src="assets/js/logout.js"></script>
+  <script src="assets/js/empleado/reporteEmpleado.js"></script>
 </body>
 </html>

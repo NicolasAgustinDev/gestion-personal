@@ -136,13 +136,12 @@
             <div class="col-12 col-sm-6 col-xl-3">
               <article class="metric-card metric-primary">
                 <div class="metric-top">
-                  <span class="metric-label">Revenue</span>
-                  <span class="metric-icon"><i class="bi bi-currency-dollar" aria-hidden="true"></i></span>
+                  <span class="metric-label">Total Empleados</span>
+                  <span class="metric-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
                 </div>
-                <div class="metric-value">$48,240</div>
-                <div class="metric-meta">
-                  <span class="text-success">+12.5%</span>
-                  <span>from last month</span>
+                <div class="metric-value">
+                  <strong id="empleadosTotal">
+                  </strong>
                 </div>
               </article>
             </div>
@@ -150,13 +149,12 @@
             <div class="col-12 col-sm-6 col-xl-3">
               <article class="metric-card metric-success">
                 <div class="metric-top">
-                  <span class="metric-label">Orders</span>
+                  <span class="metric-label">Empleados Activos</span>
                   <span class="metric-icon"><i class="bi bi-bag-check" aria-hidden="true"></i></span>
                 </div>
-                <div class="metric-value">1,284</div>
-                <div class="metric-meta">
-                  <span class="text-success">+8.2%</span>
-                  <span>new orders</span>
+                <div class="metric-value">
+                  <strong id="empleadosActivos">
+                  </strong>
                 </div>
               </article>
             </div>
@@ -164,13 +162,11 @@
             <div class="col-12 col-sm-6 col-xl-3">
               <article class="metric-card metric-warning">
                 <div class="metric-top">
-                  <span class="metric-label">Customers</span>
+                  <span class="metric-label">Empleados Inactivos</span>
                   <span class="metric-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
                 </div>
-                <div class="metric-value">8,742</div>
-                <div class="metric-meta">
-                  <span class="text-success">+5.1%</span>
-                  <span>active users</span>
+                <div class="metric-value">
+                  <strong id="empleadosInactivos"></strong>
                 </div>
               </article>
             </div>
@@ -178,8 +174,8 @@
             <div class="col-12 col-sm-6 col-xl-3">
               <article class="metric-card metric-danger">
                 <div class="metric-top">
-                  <span class="metric-label">Tickets</span>
-                  <span class="metric-icon"><i class="bi bi-life-preserver" aria-hidden="true"></i></span>
+                  <span class="metric-label">Nuevos Empleados</span>
+                  <span class="metric-icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
                 </div>
                 <div class="metric-value">36</div>
                 <div class="metric-meta">
@@ -195,10 +191,10 @@
               <div class="panel">
                 <div class="panel-header">
                   <div>
-                    <h2 class="h5 mb-1 section-title"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i><span>Sales Performance</span></h2>
-                    <p class="text-muted mb-0">Monthly revenue compared with operational targets.</p>
+                    <h2 class="h5 mb-1 section-title"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i><span>Evolucion de Empleados</span></h2>
+                    <p class="text-muted mb-0">Cantidad de empleados ingresados por mes</p>
                   </div>
-                  <a class="btn btn-light btn-sm" href="charts.html">View Details</a>
+                  <a class="btn btn-light btn-sm" href="charts.html">Ver detalles</a>
                 </div>
 
                 <div class="chart-bars" aria-label="Sales performance chart">
@@ -342,5 +338,6 @@
   <script src="../assets/js/main.js"></script>
   <script src="assets/js/usuario/usuario.js"></script>
   <script src="assets/js/logout.js"></script>
+  <script src="assets/js/empleado/reporteEmpleado.js"></script>
 </body>
 </html>

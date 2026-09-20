@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EmployeesRepository extends JpaRepository<Employee, Long> {
-
     List<Employee> findByCategoriaId(Long id);
     boolean existsByCategoria_Id(Long id);
     Long countByCategoria(Categoria categoria);
+    Long countByEstado(boolean estado);
 }

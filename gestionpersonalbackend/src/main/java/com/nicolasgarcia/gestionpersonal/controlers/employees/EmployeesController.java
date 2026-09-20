@@ -1,4 +1,5 @@
 package com.nicolasgarcia.gestionpersonal.controlers.employees;
+import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesReporteDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesUpdateDTO;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/employees")
@@ -53,4 +55,10 @@ public class EmployeesController {
                                                        EmployeesUpdateDTO updateDTO) {
         return ResponseEntity.ok(employeesService.update(id,updateDTO));
     }
+    @GetMapping("reporte")
+    public ResponseEntity<EmployeesReporteDTO> generarReporte() throws ExecutionException, InterruptedException{
+        employeesService.generarReporte();
+        return ResponseEntity.ok(employeesService.generarReporte());
+    }
+
 }

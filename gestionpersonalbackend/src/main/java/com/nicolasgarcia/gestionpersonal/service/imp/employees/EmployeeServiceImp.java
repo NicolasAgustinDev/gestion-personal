@@ -1,4 +1,5 @@
 package com.nicolasgarcia.gestionpersonal.service.imp.employees;
+import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesReporteDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesUpdateDTO;
@@ -11,6 +12,7 @@ import com.nicolasgarcia.gestionpersonal.repository.employees.EmployeesRepositor
 import com.nicolasgarcia.gestionpersonal.service.employees.EmployeeService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.concurrent.*;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService {
@@ -82,4 +84,37 @@ public class EmployeeServiceImp implements EmployeeService {
         Employee update = employeesRepository.save(emp);
         return employeesMapper.toDTO(update);
     }
+    // ============================
+    // GENERAR REPORTES
+    // ============================
+    @Override
+    public EmployeesReporteDTO generarReporte() throws ExecutionException, InterruptedException {
+        Callable<Long> totalEmpleados = () -> {
+            System.out.println("Ejecutado por "+ Thread.currentThread().getName());
+            return employeesRepository.count() ;
+        };
+        Callable<Long> empleadosActivos = () -> {
+            System.out.println("Ejecutado por "+ Thread.currentThread().getName());
+            return employeesRepository.countByEstado(true);
+        };
+        Callable<Long> empleadosInactivos = () -> {
+            System.out.println("Ejecutado por "+ Thread.currentThread().getName());
+            return employeesRepository.countByEstado(false);
+        };
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        Future<Long> resultado = executor.submit(totalEmpleados);
+        Future<Long> resultadoActivos = executor.submit(empleadosActivos);
+        Future<Long> resultadoInactivos = executor.submit(empleadosInactivos);
+        Long total = resultado.get();
+        Long totalActivos = resultadoActivos.get();
+        Long totalInactivos = resultadoInactivos.get();
+        executor.shutdown();
+        return new EmployeesReporteDTO(
+                total,
+                totalActivos,
+                totalInactivos
+        );
+    }
+
+
 }
