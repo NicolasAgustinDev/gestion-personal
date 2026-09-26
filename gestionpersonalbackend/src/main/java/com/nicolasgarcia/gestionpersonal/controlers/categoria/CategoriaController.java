@@ -1,4 +1,5 @@
 package com.nicolasgarcia.gestionpersonal.controlers.categoria;
+import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaReporteDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaUpdateDTO;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/categoria")
@@ -49,5 +51,11 @@ public class CategoriaController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         this.categoriaService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("reporte")
+    public ResponseEntity<CategoriaReporteDTO> generarReporte() throws ExecutionException, InterruptedException{
+        this.categoriaService.generarReporte();
+        return ResponseEntity.ok(categoriaService.generarReporte());
+
     }
 }

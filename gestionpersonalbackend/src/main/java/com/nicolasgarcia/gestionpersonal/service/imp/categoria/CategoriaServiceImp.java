@@ -1,27 +1,35 @@
 package com.nicolasgarcia.gestionpersonal.service.imp.categoria;
+import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaReporteDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaUpdateDTO;
+import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesReporteDTO;
 import com.nicolasgarcia.gestionpersonal.entity.Categoria;
 import com.nicolasgarcia.gestionpersonal.exception.CategoriaNotFoundExeption;
 import com.nicolasgarcia.gestionpersonal.mapper.categoria.CategoriaMapper;
 import com.nicolasgarcia.gestionpersonal.repository.categoria.CategoriaRepository;
 import com.nicolasgarcia.gestionpersonal.repository.employees.EmployeesRepository;
 import com.nicolasgarcia.gestionpersonal.service.categoria.CategoriaService;
+import com.nicolasgarcia.gestionpersonal.service.reportes.categoria.ReporteCategoriaService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class CategoriaServiceImp implements CategoriaService {
     private final CategoriaRepository categoriaRepository;
     private final EmployeesRepository employeesRepository;
     private final CategoriaMapper categoriaMapper;
+    private final ReporteCategoriaService reporteService;
 
     public CategoriaServiceImp(CategoriaRepository categoriaRepository,
-                               CategoriaMapper categoriaMapper,EmployeesRepository employeesRepository){
+                               CategoriaMapper categoriaMapper,EmployeesRepository employeesRepository,
+                               ReporteCategoriaService reporteService){
         this.categoriaRepository=categoriaRepository;
         this.employeesRepository=employeesRepository;
         this.categoriaMapper=categoriaMapper;
+        this.reporteService=reporteService;
     }
     // ============================
     // GET ALL
@@ -83,4 +91,29 @@ public class CategoriaServiceImp implements CategoriaService {
         }
         categoriaRepository.delete(cat);
     }
+    // ============================
+    // GENERAR REPORTES
+    // ============================
+    @Override
+    public CategoriaReporteDTO generarReporte() throws ExecutionException, InterruptedException{
+        CompletableFuture<Long> total =
+                reporteService.obtenerTotalCategorias();
+        CompletableFuture<Long> activos =
+                reporteService.obtenerCategoriasActivas();
+        CompletableFuture<Long> inactivos =
+                reporteService.obtenerCategoriasInactivas();
+        CompletableFuture.allOf(
+                total,
+                activos,
+                inactivos
+        ).join();
+        return new CategoriaReporteDTO(
+                total.get(),
+                activos.get(),
+                inactivos.get()
+        );
+
+
+    }
+
 }

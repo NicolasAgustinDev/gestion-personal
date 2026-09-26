@@ -3,13 +3,12 @@ import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesReporteDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesUpdateDTO;
-import com.nicolasgarcia.gestionpersonal.entity.Categoria;
 import com.nicolasgarcia.gestionpersonal.entity.Employee;
 import com.nicolasgarcia.gestionpersonal.exception.EmployeesNotFoundExeption;
-import com.nicolasgarcia.gestionpersonal.exception.GlobalExceptionHandler;
 import com.nicolasgarcia.gestionpersonal.mapper.employees.EmployeesMapper;
 import com.nicolasgarcia.gestionpersonal.repository.employees.EmployeesRepository;
 import com.nicolasgarcia.gestionpersonal.service.employees.EmployeeService;
+import com.nicolasgarcia.gestionpersonal.service.reportes.employees.ReporteEmployeesService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.*;
@@ -18,11 +17,14 @@ import java.util.concurrent.*;
 public class EmployeeServiceImp implements EmployeeService {
     private final EmployeesRepository employeesRepository;
     private final EmployeesMapper employeesMapper;
+    private final ReporteEmployeesService reporteEmployeesService;
 
     public EmployeeServiceImp(EmployeesRepository employeesRepository,
-                              EmployeesMapper employeesMapper){
+                              EmployeesMapper employeesMapper,
+                              ReporteEmployeesService reporteEmployeesService){
         this.employeesRepository=employeesRepository;
         this.employeesMapper=employeesMapper;
+        this.reporteEmployeesService = reporteEmployeesService;
     }
     // ============================
     // GET BY ID
@@ -89,30 +91,21 @@ public class EmployeeServiceImp implements EmployeeService {
     // ============================
     @Override
     public EmployeesReporteDTO generarReporte() throws ExecutionException, InterruptedException {
-        Callable<Long> totalEmpleados = () -> {
-            System.out.println("Ejecutado por "+ Thread.currentThread().getName());
-            return employeesRepository.count() ;
-        };
-        Callable<Long> empleadosActivos = () -> {
-            System.out.println("Ejecutado por "+ Thread.currentThread().getName());
-            return employeesRepository.countByEstado(true);
-        };
-        Callable<Long> empleadosInactivos = () -> {
-            System.out.println("Ejecutado por "+ Thread.currentThread().getName());
-            return employeesRepository.countByEstado(false);
-        };
-        ExecutorService executor = Executors.newFixedThreadPool(3);
-        Future<Long> resultado = executor.submit(totalEmpleados);
-        Future<Long> resultadoActivos = executor.submit(empleadosActivos);
-        Future<Long> resultadoInactivos = executor.submit(empleadosInactivos);
-        Long total = resultado.get();
-        Long totalActivos = resultadoActivos.get();
-        Long totalInactivos = resultadoInactivos.get();
-        executor.shutdown();
-        return new EmployeesReporteDTO(
+        CompletableFuture<Long> total =
+                reporteEmployeesService.obtenerTotalEmpleados();
+        CompletableFuture<Long> activos =
+                reporteEmployeesService.obtenerEmpleadosActivo();
+        CompletableFuture<Long> inactivos =
+                reporteEmployeesService.obtenerEmpleadosInactivo();
+        CompletableFuture.allOf(
                 total,
-                totalActivos,
-                totalInactivos
+                activos,
+                inactivos
+        ).join();
+        return new EmployeesReporteDTO(
+                total.get(),
+                activos.get(),
+                inactivos.get()
         );
     }
 
