@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +26,9 @@ public class Usuario {
     @Column(nullable = false)
     private Rol rol;
     private Boolean estado;
+    @OneToMany
+    @JoinColumn(name="refresh_token")
+    private List<RefreshToken> refreshTokens;
 
     @PrePersist
     public void prePersist() {

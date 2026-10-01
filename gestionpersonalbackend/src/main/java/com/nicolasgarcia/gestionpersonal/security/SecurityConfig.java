@@ -2,6 +2,7 @@ package com.nicolasgarcia.gestionpersonal.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,8 +23,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
-
+public class SecurityConfig{
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtFilter jwtFilter;
 
@@ -53,15 +53,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http) throws Exception {
-
         http
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/categoria/**").hasRole("ADMIN")
-                        .requestMatchers("/employees/**").hasRole("ADMIN")
-                        .requestMatchers("/usuario/**").hasRole("ADMIN")
+                        // Autenticacion
+                        .requestMatchers("/auth/**")
+                        .permitAll()
+                        // Perfil propio
+                        .requestMatchers("/usuario/me")
+                        .authenticated()
+                        //Administracion de Usuarios
+                        .requestMatchers("/usuario/**")
+                        .hasRole("ADMIN")
+                        // EMPLEADOS: Solo lectura
+                        .requestMatchers(HttpMethod.GET,"/employees/**")
+                        .hasAnyRole("ADMIN","EMPLEADO")
+                        // CATEGORIA: Solo lectura
+                        .requestMatchers(HttpMethod.GET,"/categoria/**")
+                        .hasAnyRole("ADMIN","EMPLEADO")
+                        // EMPLEADOS: modificar/agregar/eliminar
+                        .requestMatchers("/employees/**")
+                        .hasRole("ADMIN")
+                        // CATEGORIA: modificar/agregar/eliminar
+                        .requestMatchers("/categoria/**")
+                        .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

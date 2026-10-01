@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const usuario = {
             username : document.getElementById("loginuser").value,
-            password : document.getElementById("loginPassword").value
+            password : document.getElementById("password").value
         };
         try {
             const response = await fetch("http://localhost:8080/auth/login", {

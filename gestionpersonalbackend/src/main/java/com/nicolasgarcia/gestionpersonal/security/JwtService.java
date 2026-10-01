@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
 import java.util.function.Function;
 @Service
 public class JwtService {
@@ -25,12 +27,16 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    private String buildToken(final CustomUserDetails userDetails, final long expiration){
         return Jwts.builder()
+                .claims(Map.of(
+                        "name" , userDetails.getUsername(),
+                        "email", userDetails.getEmail()
+                ))
                 .subject(userDetails.getUsername())
-                .issuedAt(new Date())
+                .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(
-                        new Date(System.currentTimeMillis() + jwtExpiration)
+                        new Date(System.currentTimeMillis() + expiration)
                 )
                 .signWith(
                         getSignInKey(),
@@ -38,18 +44,12 @@ public class JwtService {
                 )
                 .compact();
     }
-    public String generateRefreshToken(UserDetails userDetails){
-        return Jwts.builder()
-                .subject(userDetails.getUsername())
-                .issuedAt(new Date())
-                .expiration(
-                        new Date(System.currentTimeMillis() + refreshExpiration)
-                )
-                .signWith(
-                        getSignInKey(),
-                        Jwts.SIG.HS256
-                )
-                .compact();
+
+    public String generateToken(CustomUserDetails userDetails) {
+        return buildToken(userDetails,jwtExpiration);
+    }
+    public String generateRefreshToken(CustomUserDetails userDetails){
+        return buildToken(userDetails,refreshExpiration);
     }
 
     public String extractUsername(String token) {
@@ -62,6 +62,10 @@ public class JwtService {
 
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    public LocalDateTime getRefreshExpiration(){
+        return LocalDateTime.now().plusMinutes(refreshExpiration);
     }
 
     private Claims extractAllClaims(String token) {

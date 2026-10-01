@@ -42,7 +42,21 @@
               Forgot?
             </a>
           </div>
-          <input class="form-control" id="loginPassword" type="password" minlength="6" required>
+          <input
+            class="form-control"
+            id="password" 
+            type="password" 
+            minlength="6" 
+            required
+          >
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="togglePassword"
+            aria-label="Mostrar contraseña"
+          >
+            <i class="bi bi-eye"></i>
+          </button>
           <div class="invalid-feedback">
             Password must be at least 6 characters.
           </div>
@@ -51,12 +65,13 @@
         <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i> Sign In</button>
       </form>
       
-      <div class="auth-footer">New here? <a href="register.html">Crear una cuenta</a></div>
+      <div class="auth-footer">Nuevo Aqui? <a href="register.html">Crear una cuenta</a></div>
     </section>
   </main>
 
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/main.js"></script>
   <script src="assets/js/login.js"></script>
+  <script src="assets/js/loginPassword.js"></script>
 </body>
 </html>

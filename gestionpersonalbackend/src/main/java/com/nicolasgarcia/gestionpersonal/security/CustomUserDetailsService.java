@@ -1,6 +1,5 @@
 package com.nicolasgarcia.gestionpersonal.security;
 import com.nicolasgarcia.gestionpersonal.entity.Usuario;
-import com.nicolasgarcia.gestionpersonal.mapper.auth.AuthMapper;
 import com.nicolasgarcia.gestionpersonal.repository.usuario.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
