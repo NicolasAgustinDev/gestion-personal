@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-    obtenerEmpleados();
+    obtenerUsuarios();
     // ========================================== 
-    // EVENTOS DE LOS BOTONES DE EMPLEADOS 
+    // EVENTOS DE LOS BOTONES DE Usuarios 
     // ==========================================
     document.addEventListener("click", (e) => {
         const botonEditar = e.target.closest(".btn-editar");
         
         if (botonEditar) {
             const id = botonEditar.dataset.id;
-            getEmpleado(id);
+            getUsuario(id);
             return;
         }
 
@@ -16,19 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (botonEliminar) {
             const id = botonEliminar.dataset.id;
-            eliminarEmpleado(id);
+            eliminarUsuario(id);
         }
     })
 });
-async function obtenerEmpleados() {
-    try {
+
+async function obtenerUsuarios(){
+    try{
         const token = localStorage.getItem("token");
-
-        const payload = JSON.parse(atob(token.split(".")[1]));
-
-        const username = payload.sub;
-
-        const response = await fetch("http://localhost:8080/employees" ,{
+        const response = await fetch("http://localhost:8080/usuario" ,{
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -37,45 +33,29 @@ async function obtenerEmpleados() {
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
-        
-        const empleados = await response.json();
+        const usuarios = await response.json(response); 
+        mostrarUsuarios(usuarios);
 
-        mostrarEmpleados(empleados);
-
-    } catch (error) {
-        console.error("Error al obtener empleados:", error);
+    }catch(error){
+        console.error("Error al obtener los usuarios: ",error);
     }
 }
-function mostrarEmpleados(empleados) {
-    const tabla = document.getElementById("tablaEmpleados");
 
+function mostrarUsuarios(usuarios){
+    const tabla = document.getElementById("tablaUsuarios")
     tabla.innerHTML = "";
-
-    empleados.forEach(empleado => {
-
+    usuarios.forEach(usuario => {
         tabla.innerHTML += `
             <tr>
-                <td>${empleado.nombre}</td>
-                <td>${empleado.apellido}</td>
-                <td>${empleado.dni}</td>
+                <td>${usuario.nombre} ${usuario.apellido}</td>
+                <td>${usuario.username}</td>
+                <td class="email-cell">${usuario.email}</td>
+                <td>
+                    ${usuario.rol}
+                </td>
                 <td>
                     ${
-                        empleado.sueldo
-                            ? `$${empleado.sueldo.toLocaleString("es-AR")}`
-                            : "Sin sueldo"
-                    }
-                </td>
-                <td>${empleado.telefono}</td>
-                <td class="email-cell">${empleado.email}</td>
-                <td class="categoria">
-                    ${
-                        obtenerCategoria(empleado.categoriaId)
-                    }
-                </td>
-                <td class="text-end" >${empleado.fechaingreso}</td>
-                <td>
-                    ${
-                        empleado.estado
+                        usuario.estado
                             ? '<span class="badge bg-success">Activo</span>'
                             : '<span class="badge bg-danger">Inactivo</span>'
                     }
@@ -86,13 +66,13 @@ function mostrarEmpleados(empleados) {
                             class="btn btn-warning btn-sm btn-editar"
                             data-bs-toggle="modal"
                             data-bs-target="#modalEditar"
-                            data-id="${empleado.id}"
+                            data-id="${usuario.id}"
                         >
                         Editar
                         </button>
                         <button
                             class="btn btn-danger btn-sm btn-eliminar"
-                            data-id="${empleado.id}"
+                            data-id="${usuario.id}"
                         >
                         Eliminar
                         </button>

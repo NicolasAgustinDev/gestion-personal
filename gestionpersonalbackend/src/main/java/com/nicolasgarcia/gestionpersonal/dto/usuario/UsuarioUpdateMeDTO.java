@@ -1,7 +1,6 @@
 package com.nicolasgarcia.gestionpersonal.dto.usuario;
-import com.nicolasgarcia.gestionpersonal.enums.usuario.Rol;
+
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UsuarioUpdateDTO {
+public class UsuarioUpdateMeDTO {
     @NotBlank
     private String nombre;
     @NotBlank
@@ -20,10 +19,4 @@ public class UsuarioUpdateDTO {
     private String username;
     @NotBlank
     private String email;
-    @NotNull
-    private Rol rol;
-    @NotNull
-    private Boolean estado;
-
 }
-

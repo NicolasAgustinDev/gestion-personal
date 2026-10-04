@@ -1,7 +1,6 @@
 // ========================================== 
 //  CARGAR EMPLEADO EN EL MODAL 
 //  ==========================================
-
 async function getEmpleado(id) {
     try {
         const token = localStorage.getItem("token");
@@ -52,8 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
         await modificarEmpleado(formulario);
     });
 });
-
-
 
 // ==========================================
 // MODIFICAR EMPLEADO

@@ -4,6 +4,7 @@ import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaUpdateDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateDTO;
+import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateMeDTO;
 import com.nicolasgarcia.gestionpersonal.service.imp.usuario.UsuarioServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -60,7 +61,7 @@ public class UsuarioController {
     }
     @PutMapping("/me")
     public ResponseEntity<UsuarioResponseDTO> updateMe(Authentication authentication,
-                                                       @RequestBody UsuarioUpdateDTO dto){
+                                                       @RequestBody UsuarioUpdateMeDTO dto){
         UsuarioResponseDTO usuario = usuarioService.acctualizarUsuarioActual(authentication,dto);
         return ResponseEntity.ok(usuario);
     }

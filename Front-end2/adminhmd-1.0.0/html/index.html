@@ -229,99 +229,156 @@
           <section class="panel mt-3">
             <div class="panel-header">
               <div>
-                <h2 class="h5 mb-1 section-title"><i class="bi bi-people" aria-hidden="true"></i><span>Recent Users</span></h2>
+                <h2 class="h5 mb-1 section-title"><i class="bi bi-people" aria-hidden="true"></i><span>Usuarios Recientes</span></h2>
                 <p class="text-muted mb-0">Latest account activity across the workspace.</p>
               </div>
-              <a class="btn btn-outline-secondary btn-sm" href="users.html">Manage Users</a>
             </div>
             <div class="table-responsive">
-              <table class="table align-middle mb-0">
-                <thead><tr><th scope="col">User</th><th scope="col">Role</th><th scope="col">Team</th><th scope="col">Status</th><th scope="col">Joined</th><th scope="col" class="text-end">Action</th></tr></thead>
-                <tbody>
+              <table class="table align-middle mb-0" id="">
+                <thead>
                   <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2">
-                        <img class="avatar-img avatar-sm" src="../assets/images/avatar/avatar-1.jpg" alt="Sarah Ahmed">
-                        <div>
-                          <p class="fw-semibold mb-0">Sarah Ahmed</p>
-                          <p class="text-muted small mb-0">sarah@example.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Admin</td>
-                    <td>Operations</td>
-                    <td><span class="badge text-bg-success">Active</span></td>
-                    <td>Jan 12, 2026</td>
-                    <td class="text-end"><a class="btn btn-light btn-sm" href="user-details.html">View</a></td>
+                    <th scope="col">
+                      Usuario
+                    </th>
+                    <th scope="col">
+                      Username
+                    </th>
+                    <th scope="col">
+                      Email
+                    </th>
+                    <th scope="col">
+                      Rol
+                    </th>
+                    <th scope="col">
+                      Estado
+                    </th>
+                    <th scope="col" 
+                      class="text-end"
+                    >
+                      Accion
+                    </th>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2">
-                        <img class="avatar-img avatar-sm" src="../assets/images/avatar/avatar-2.jpg" alt="Rafi Khan">
-                        <div>
-                          <p class="fw-semibold mb-0">Rafi Khan</p>
-                          <p class="text-muted small mb-0">rafi@example.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Manager</td>
-                    <td>Sales</td>
-                    <td><span class="badge text-bg-success">Active</span></td>
-                    <td>Feb 03, 2026</td>
-                    <td class="text-end"><a class="btn btn-light btn-sm" href="user-details.html">View</a></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2">
-                        <img class="avatar-img avatar-sm" src="../assets/images/avatar/avatar-3.jpg" alt="Nadia Islam">
-                        <div>
-                          <p class="fw-semibold mb-0">Nadia Islam</p>
-                          <p class="text-muted small mb-0">nadia@example.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Editor</td>
-                    <td>Content</td>
-                    <td><span class="badge text-bg-warning">Pending</span></td>
-                    <td>Mar 18, 2026</td>
-                    <td class="text-end"><a class="btn btn-light btn-sm" href="user-details.html">View</a></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2">
-                        <img class="avatar-img avatar-sm" src="../assets/images/avatar/avatar-4.jpg" alt="Mina Torres">
-                        <div>
-                          <p class="fw-semibold mb-0">Mina Torres</p>
-                          <p class="text-muted small mb-0">mina@example.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Viewer</td>
-                    <td>Finance</td>
-                    <td><span class="badge text-bg-secondary">Suspended</span></td>
-                    <td>Apr 07, 2026</td>
-                    <td class="text-end"><a class="btn btn-light btn-sm" href="user-details.html">View</a></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2">
-                        <img class="avatar-img avatar-sm" src="../assets/images/avatar/avatar-5.jpg" alt="Jon Oliver">
-                        <div>
-                          <p class="fw-semibold mb-0">Jon Oliver</p>
-                          <p class="text-muted small mb-0">jon@example.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Analyst</td>
-                    <td>Data</td>
-                    <td><span class="badge text-bg-success">Active</span></td>
-                    <td>Apr 22, 2026</td>
-                    <td class="text-end"><a class="btn btn-light btn-sm" href="user-details.html">View</a></td>
-                  </tr>
+                </thead>
+                <tbody id="tablaUsuarios">
+
                 </tbody>
               </table>
             </div>
           </section>
+          <div class="modal fade" id="modalEditar">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Editar Usuario</h5>
+                </div>
+                <div class="modal-body">
+                  <form id="formEditarUsuario">
+                    <input type="hidden" id="editId">
+
+                    <div class="col-md-6">
+                      <label class="form-label" for="editNombre">
+                        Nombre
+                      </label>
+                      <input 
+                        class="form-control" 
+                        id="editNombre" 
+                        type="text" 
+                        required
+                      >
+                      <div class="invalid-feedback">
+                        First name is required.
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="editApellido">
+                        Apellido
+                      </label>
+                      <input
+                      class="form-control" 
+                      id="editApellido" 
+                      type="text" 
+                      required
+                      >
+                      <div class="invalid-feedback">
+                        Last name is required.
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="editUsername">
+                        Usuario
+                      </label>
+                      <input
+                      class="form-control" 
+                      id="editUsername" 
+                      type="text" 
+                      required
+                      >
+                      <div class="invalid-feedback">
+                        Username is required.
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="editEmail">
+                        Email
+                      </label>
+                      <input 
+                        class="form-control" 
+                        id="editEmail" 
+                        type="email" 
+                        required
+                      >
+                      <div class="invalid-feedback">
+                        Email is required.
+                      </div>
+                    </div>
+                    <div class="form-check">
+                      <input 
+                        class="form-check-input" 
+                        id="editEstado" 
+                        type="checkbox" 
+                      >
+                      <label class="form-check-label" for="editEstado">
+                        Estado
+                      </label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="editRol">
+                        Rol
+                      </label>
+                      <select
+                        class="form-select" 
+                        id="editRol" 
+                        required
+                      >
+                        <option value="">Seleccione</option>
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="EMPLEADO">EMPLEADO</option>
+                      </select>
+                      <div class="invalid-feedback">
+                        Seleccione un Rol.
+                      </div>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        class="btn btn-primary" 
+                        type="submit"
+                      >
+                      <i class="bi bi-person-check" aria-hidden="true"></i>
+                      Modificar Usuario
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
@@ -339,5 +396,8 @@
   <script src="assets/js/usuario/usuario.js"></script>
   <script src="assets/js/logout.js"></script>
   <script src="assets/js/empleado/reporteEmpleado.js"></script>
+  <script src="assets/js/usuario/tablaUsuarios.js"></script>
+  <script src="assets/js/usuario/eliminarUsuario.js"></script>
+  <script src="assets/js/usuario/editarUsuario.js"></script>
 </body>
 </html>

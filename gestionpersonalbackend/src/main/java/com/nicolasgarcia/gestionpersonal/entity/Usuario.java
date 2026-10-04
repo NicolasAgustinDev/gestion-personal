@@ -26,8 +26,11 @@ public class Usuario {
     @Column(nullable = false)
     private Rol rol;
     private Boolean estado;
-    @OneToMany
-    @JoinColumn(name="refresh_token")
+    @OneToMany(
+            mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<RefreshToken> refreshTokens;
 
     @PrePersist

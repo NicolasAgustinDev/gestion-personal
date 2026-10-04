@@ -2,6 +2,7 @@ package com.nicolasgarcia.gestionpersonal.service.imp.usuario;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateDTO;
+import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateMeDTO;
 import com.nicolasgarcia.gestionpersonal.entity.Usuario;
 import com.nicolasgarcia.gestionpersonal.exception.CategoriaNotFoundExeption;
 import com.nicolasgarcia.gestionpersonal.exception.EmployeesNotFoundExeption;
@@ -61,10 +62,10 @@ public class UsuarioServiceImp implements UsuarioService {
     // ============================
     @Override
     public UsuarioResponseDTO acctualizarUsuarioActual(Authentication authentication,
-                                                       UsuarioUpdateDTO dto){
+                                                       UsuarioUpdateMeDTO dto){
         CustomUserDetails customUserDetails =(CustomUserDetails)authentication.getPrincipal();
         Usuario usuario = customUserDetails.getUsuario();
-        usuarioMapper.updateEntity(dto,usuario);
+        usuarioMapper.updateMeEntity(dto,usuario);
         Usuario saved = usuarioRepository.save(usuario);
         return usuarioMapper.toDTO(saved);
     }

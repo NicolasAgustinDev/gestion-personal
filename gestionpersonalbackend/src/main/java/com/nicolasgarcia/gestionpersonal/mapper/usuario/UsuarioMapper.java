@@ -2,6 +2,7 @@ package com.nicolasgarcia.gestionpersonal.mapper.usuario;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateDTO;
+import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateMeDTO;
 import com.nicolasgarcia.gestionpersonal.entity.Usuario;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +36,19 @@ public class UsuarioMapper {
         return usuario;
     }
     public Usuario updateEntity(UsuarioUpdateDTO updateDTO,
+                                  Usuario usuario ){
+        if (updateDTO == null) {
+            return null;
+        }
+        usuario.setNombre(updateDTO.getNombre());
+        usuario.setApellido(updateDTO.getApellido());
+        usuario.setUsername(updateDTO.getUsername());
+        usuario.setEmail(updateDTO.getEmail());
+        usuario.setRol(updateDTO.getRol());
+        usuario.setEstado(updateDTO.getEstado());
+        return usuario;
+    }
+    public Usuario updateMeEntity(UsuarioUpdateMeDTO updateDTO,
                                   Usuario usuario ){
         if (updateDTO == null) {
             return null;
