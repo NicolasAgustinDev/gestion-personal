@@ -3,9 +3,9 @@ import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaReporteDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaUpdateDTO;
-import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesReporteDTO;
 import com.nicolasgarcia.gestionpersonal.entity.Categoria;
-import com.nicolasgarcia.gestionpersonal.exception.CategoriaNotFoundExeption;
+import com.nicolasgarcia.gestionpersonal.exception.ResourceAlreadyExistsException;
+import com.nicolasgarcia.gestionpersonal.exception.ResourceNotFoundExcepcion;
 import com.nicolasgarcia.gestionpersonal.mapper.categoria.CategoriaMapper;
 import com.nicolasgarcia.gestionpersonal.repository.categoria.CategoriaRepository;
 import com.nicolasgarcia.gestionpersonal.repository.employees.EmployeesRepository;
@@ -56,7 +56,7 @@ public class CategoriaServiceImp implements CategoriaService {
     @Override
     public  CategoriaResponseDTO getById(Long id){
         Categoria cat = categoriaRepository.findById(id)
-                .orElseThrow(() -> new CategoriaNotFoundExeption("Categoria no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundExcepcion("Categoria no encontrada" + id));
         return categoriaMapper.toDTO(cat);
     }
     // ============================
@@ -64,6 +64,11 @@ public class CategoriaServiceImp implements CategoriaService {
     // ============================
     @Override
     public CategoriaResponseDTO create(CategoriaRequestDTO requestDTO){
+        if(categoriaRepository.existsByCodigo(requestDTO.getCodigo())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe una categoria con ese codigo"
+            );
+        };
         Categoria cat = categoriaMapper.toEntity(requestDTO);
         Categoria saved = categoriaRepository.save(cat);
         return categoriaMapper.toDTO(saved);
@@ -74,7 +79,12 @@ public class CategoriaServiceImp implements CategoriaService {
     @Override
     public CategoriaResponseDTO update(Long id, CategoriaUpdateDTO updateDTO){
         Categoria cat = categoriaRepository.findById(id)
-                .orElseThrow(() -> new CategoriaNotFoundExeption("Categoria no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundExcepcion("Categoria no encontrada" + id));
+        if(categoriaRepository.existsByCodigo(updateDTO.getCodigo())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe una categoria con ese codigo"
+            );
+        };
         categoriaMapper.updateEntity(updateDTO,cat);
         Categoria update = categoriaRepository.save(cat);
         return categoriaMapper.toDTO(update);
@@ -85,7 +95,7 @@ public class CategoriaServiceImp implements CategoriaService {
     @Override
     public void delete(Long id){
         Categoria cat = categoriaRepository.findById(id)
-                .orElseThrow(() -> new CategoriaNotFoundExeption("Categoria no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundExcepcion("Categoria no encontrada" + id));
         if(employeesRepository.existsByCategoria_Id(id)){
             throw new RuntimeException("No se puede eliminar la categoría porque tiene empleados asociados");
         }
@@ -112,8 +122,5 @@ public class CategoriaServiceImp implements CategoriaService {
                 activos.get(),
                 inactivos.get()
         );
-
-
     }
-
 }

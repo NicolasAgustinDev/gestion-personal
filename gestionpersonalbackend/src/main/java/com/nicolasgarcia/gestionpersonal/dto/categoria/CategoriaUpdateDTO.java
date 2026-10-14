@@ -13,12 +13,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class CategoriaUpdateDTO {
-    @NotBlank
+    @NotBlank(message = "El codigo es obligatorio")
     private String codigo;
-    @NotBlank
+    @NotBlank(message = "La descripcion es obligatorio")
     private String descripcion;
-    @NotNull
+    @NotNull(message = "El sueldo es obligatorio")
     private BigDecimal sueldo;
-    @NotNull
+    @NotNull(message = "El estado es obligatorio")
     private Boolean estado;
 }

@@ -1,6 +1,4 @@
 package com.nicolasgarcia.gestionpersonal.controlers.usuario;
-import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaResponseDTO;
-import com.nicolasgarcia.gestionpersonal.dto.categoria.CategoriaUpdateDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateDTO;
@@ -11,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

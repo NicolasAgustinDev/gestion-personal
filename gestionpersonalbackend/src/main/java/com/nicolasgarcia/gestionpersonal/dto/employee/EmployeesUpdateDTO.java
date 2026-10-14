@@ -1,4 +1,5 @@
 package com.nicolasgarcia.gestionpersonal.dto.employee;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,20 +13,21 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class EmployeesUpdateDTO {
-    @NotBlank
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
-    @NotBlank
+    @NotBlank(message = "El apellido es obligatorio")
     private String apellido;
-    @NotBlank
+    @NotBlank(message = "El DNI es obligatorio")
     private String dni;
-    @NotBlank
+    @NotBlank(message = "El telefono es obligatorio")
     private String telefono;
-    @NotBlank
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "El email tiene que tener un formato valido")
     private String email;
-    @NotNull
+    @NotNull(message = "El estado es obligatorio")
     private Boolean estado;
-    @NotNull
+    @NotNull(message = "La categoria es obligatorio")
     private Long categoriaId;
-    @NotNull
+    @NotNull(message = "La fecha de ingreso es obligatorio")
     private LocalDate fechaingreso;
 }

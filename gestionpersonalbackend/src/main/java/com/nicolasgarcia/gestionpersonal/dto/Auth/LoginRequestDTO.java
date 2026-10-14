@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class LoginRequestDTO {
-    @NotBlank
+    @NotBlank(message = "El username no puede estar vacio")
     private String username;
-    @NotBlank
+    @NotBlank(message = "La contraseña no puede estar vacia")
     private String password;
 
 }

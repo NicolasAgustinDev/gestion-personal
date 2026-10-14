@@ -4,8 +4,8 @@ import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateDTO;
 import com.nicolasgarcia.gestionpersonal.dto.usuario.UsuarioUpdateMeDTO;
 import com.nicolasgarcia.gestionpersonal.entity.Usuario;
-import com.nicolasgarcia.gestionpersonal.exception.CategoriaNotFoundExeption;
-import com.nicolasgarcia.gestionpersonal.exception.EmployeesNotFoundExeption;
+import com.nicolasgarcia.gestionpersonal.exception.ResourceAlreadyExistsException;
+import com.nicolasgarcia.gestionpersonal.exception.ResourceNotFoundExcepcion;
 import com.nicolasgarcia.gestionpersonal.mapper.usuario.UsuarioMapper;
 import com.nicolasgarcia.gestionpersonal.repository.usuario.UsuarioRepository;
 import com.nicolasgarcia.gestionpersonal.security.CustomUserDetails;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-
 public class UsuarioServiceImp implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
@@ -32,7 +31,7 @@ public class UsuarioServiceImp implements UsuarioService {
     @Override
     public UsuarioResponseDTO getById(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new EmployeesNotFoundExeption("Usuario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundExcepcion("Usuario no encontrado" + id));
         return usuarioMapper.toDTO(usuario);
     }
 
@@ -65,6 +64,16 @@ public class UsuarioServiceImp implements UsuarioService {
                                                        UsuarioUpdateMeDTO dto){
         CustomUserDetails customUserDetails =(CustomUserDetails)authentication.getPrincipal();
         Usuario usuario = customUserDetails.getUsuario();
+        if (usuarioRepository.existsByEmail(dto.getEmail())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe un usuario con ese email"
+            );
+        }
+        if(usuarioRepository.existsByUsername(dto.getUsername())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe un usuario con ese username"
+            );
+        }
         usuarioMapper.updateMeEntity(dto,usuario);
         Usuario saved = usuarioRepository.save(usuario);
         return usuarioMapper.toDTO(saved);
@@ -86,7 +95,17 @@ public class UsuarioServiceImp implements UsuarioService {
     @Override
     public UsuarioResponseDTO update(Long id, UsuarioUpdateDTO updateDTO){
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new CategoriaNotFoundExeption("Usuario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundExcepcion("Usuario no encontrado" + id));
+        if (usuarioRepository.existsByEmail(updateDTO.getEmail())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe un usuario con ese email"
+            );
+        }
+        if(usuarioRepository.existsByUsername(updateDTO.getUsername())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe un usuario con ese username"
+            );
+        }
         usuarioMapper.updateEntity(updateDTO,usuario);
         Usuario update = usuarioRepository.save(usuario);
         return usuarioMapper.toDTO(update);
@@ -100,7 +119,7 @@ public class UsuarioServiceImp implements UsuarioService {
     @Override
     public void delete(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new EmployeesNotFoundExeption("Usuario not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundExcepcion("Usuario no encontrado: " + id));
         usuarioRepository.delete(usuario);
     }
 

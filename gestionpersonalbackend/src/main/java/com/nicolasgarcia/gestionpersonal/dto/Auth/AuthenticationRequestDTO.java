@@ -13,14 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AuthenticationRequestDTO {
-    @NotBlank
+    @NotBlank(message = "El nombre no puede estar vacio")
     private String nombre;
-    @NotBlank
+    @NotBlank(message = "El apellido no puede estar vacio")
     private String apellido;
     @NotBlank(message = "El usuario no puede estar vacio")
     @Size(min = 5,max = 20, message = "El usuario debe tener entre 5 y 10 caracteres")
     private String username;
-    @Email
+    @Email(message = "El email tiene que tener un formato valido")
+    @NotBlank(message = "El email no puede estar vacio")
     private String email;
     @NotBlank(message = "La contraseña no puede estar vacio")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")

@@ -4,7 +4,8 @@ import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesRequestDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesResponseDTO;
 import com.nicolasgarcia.gestionpersonal.dto.employee.EmployeesUpdateDTO;
 import com.nicolasgarcia.gestionpersonal.entity.Employee;
-import com.nicolasgarcia.gestionpersonal.exception.EmployeesNotFoundExeption;
+import com.nicolasgarcia.gestionpersonal.exception.ResourceAlreadyExistsException;
+import com.nicolasgarcia.gestionpersonal.exception.ResourceNotFoundExcepcion;
 import com.nicolasgarcia.gestionpersonal.mapper.employees.EmployeesMapper;
 import com.nicolasgarcia.gestionpersonal.repository.employees.EmployeesRepository;
 import com.nicolasgarcia.gestionpersonal.service.employees.EmployeeService;
@@ -32,7 +33,7 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public EmployeesResponseDTO getById(Long id) {
         Employee emp = employeesRepository.findById(id)
-                .orElseThrow(() ->  new EmployeesNotFoundExeption("Empleado no encontrado"));
+                .orElseThrow(() ->  new ResourceNotFoundExcepcion("Empleado no encontrado" + id));
         return employeesMapper.toDTO(emp);
     }
     // ============================
@@ -60,6 +61,16 @@ public class EmployeeServiceImp implements EmployeeService {
     // ============================
     @Override
     public EmployeesResponseDTO create(EmployeesRequestDTO requestDTO){
+        if (employeesRepository.existsByDni(requestDTO.getDni())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe un empleado con ese DNI"
+            );
+        }
+        if(employeesRepository.existsByEmail(requestDTO.getEmail())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe un empleado con ese email"
+            );
+        }
         Employee employees = employeesMapper.toEntity(requestDTO);
         Employee saved = employeesRepository.save(employees);
         return employeesMapper.toDTO(saved);
@@ -70,7 +81,7 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public void delete(Long id) {
         Employee emp = employeesRepository.findById(id)
-                .orElseThrow(() -> new EmployeesNotFoundExeption("Employee not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundExcepcion("Empleado no encontrado: " + id));
         employeesRepository.delete(emp);
     }
 
@@ -81,7 +92,12 @@ public class EmployeeServiceImp implements EmployeeService {
     public EmployeesResponseDTO update(Long id, EmployeesUpdateDTO updateDTO){
         // 1️⃣ Buscar empleado existente
         Employee emp = employeesRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundExcepcion("Empleado no encontrado"));
+        if(employeesRepository.existsByDni(updateDTO.getDni())){
+            throw new ResourceAlreadyExistsException(
+                    "Ya existe un empleado con ese DNI"
+            );
+        };
         employeesMapper.updateEmployee(updateDTO, emp);
         Employee update = employeesRepository.save(emp);
         return employeesMapper.toDTO(update);

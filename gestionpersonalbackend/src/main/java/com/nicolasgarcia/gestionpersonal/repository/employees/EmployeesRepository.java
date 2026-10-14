@@ -11,4 +11,6 @@ public interface EmployeesRepository extends JpaRepository<Employee, Long> {
     boolean existsByCategoria_Id(Long id);
     Long countByCategoria(Categoria categoria);
     Long countByEstado(boolean estado);
+    boolean existsByDni(String dni);
+    boolean existsByEmail(String email);
 }

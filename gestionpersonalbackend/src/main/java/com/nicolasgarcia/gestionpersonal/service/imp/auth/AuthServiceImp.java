@@ -11,13 +11,11 @@ import com.nicolasgarcia.gestionpersonal.mapper.auth.AuthMapper;
 import com.nicolasgarcia.gestionpersonal.repository.token.TokenRepository;
 import com.nicolasgarcia.gestionpersonal.repository.usuario.UsuarioRepository;
 import com.nicolasgarcia.gestionpersonal.security.CustomUserDetails;
-import com.nicolasgarcia.gestionpersonal.security.CustomUserDetailsService;
 import com.nicolasgarcia.gestionpersonal.security.JwtService;
 import com.nicolasgarcia.gestionpersonal.service.auth.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
